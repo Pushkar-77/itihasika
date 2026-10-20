@@ -59,18 +59,22 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
       {/* ── Content ───────────────────────────────────────── */}
-      <div className="relative z-10 w-full px-6 pb-10 pt-36 sm:pb-14">
-        {/* Headline — Poppins bold, accent words in yellow */}
-        <h1 className="mb-8 max-w-[1100px] font-body text-[32px] font-bold leading-[1.1] text-white sm:text-[40px] md:text-[52px] lg:text-[64px] xl:text-[76px]">
-          {heroData.headline.parts.map((part, i) =>
-            part.accent ? (
-              <span key={i} className="text-yellow">
-                {part.text}
-              </span>
-            ) : (
-              <span key={i}>{part.text}</span>
-            )
-          )}
+      <div className="relative z-10 w-full px-6 sm:px-10 lg:px-[90px] pb-10 pt-36 sm:pb-14">
+        {/* Headline — Poppins bold, accent words in yellow, forced line breaks on desktop */}
+        <h1 className="mb-8 font-body text-[32px] font-bold leading-[1.1] text-white sm:text-[42px] md:text-[54px] lg:text-[64px] xl:text-[72px]">
+          {heroData.headline.lines.map((line, lineIdx) => (
+            <span key={lineIdx} className="block">
+              {line.map((part, partIdx) =>
+                part.accent ? (
+                  <span key={partIdx} className="text-yellow">
+                    {part.text}
+                  </span>
+                ) : (
+                  <span key={partIdx}>{part.text}</span>
+                )
+              )}
+            </span>
+          ))}
         </h1>
 
         {/* CTA buttons */}

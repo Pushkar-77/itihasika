@@ -33,8 +33,8 @@ export function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 pt-4">
-      <div className="flex items-center gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 lg:pl-[90px] lg:pr-[110px] pt-4 transition-all duration-300">
+      <div className="flex items-center gap-6">
         {/* ── Logo ───────────────────────────────────────────
             TODO: Client must supply a dedicated light / white
             version of logo.png for use on dark backgrounds.
@@ -53,13 +53,13 @@ export function Navbar() {
         </Link>
 
         {/* ── Desktop nav pill ────────────────────────────────
-            flex-1 fills remaining width; mr-[110px] keeps the
-            pill ~110 px from the right viewport edge.
+            Spans from logo to ~110px from right viewport edge.
+            Becomes fully opaque (#0A0A0F) when scrolled > 60px.
             ──────────────────────────────────────────────────── */}
         <nav
-          className={`hidden lg:flex flex-1 items-center rounded-full px-5 py-2.5 shadow-lg transition-all duration-300 lg:mr-[110px] ${
+          className={`hidden lg:flex flex-1 items-center rounded-full px-5 py-2.5 shadow-lg transition-all duration-300 ${
             scrolled
-              ? "bg-[#0A0A0F]/[0.98] shadow-black/30"
+              ? "bg-[#0A0A0F] shadow-black/40"
               : "bg-[#0A0A0F]/90 backdrop-blur-md"
           }`}
           aria-label="Main navigation"

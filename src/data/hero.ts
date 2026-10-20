@@ -1,12 +1,19 @@
 export const heroData = {
   /** Headline rendered in Poppins bold; accent words in yellow #FFC800. */
   headline: {
-    parts: [
-      { text: "India's ", accent: false },
-      { text: "timeless", accent: true },
-      { text: " history reimagined for ", accent: false },
-      { text: "curious", accent: true },
-      { text: " minds.", accent: false },
+    lines: [
+      [
+        { text: "India's ", accent: false },
+        { text: "timeless", accent: true },
+        { text: " history", accent: false },
+      ],
+      [
+        { text: "reimagined for", accent: false },
+      ],
+      [
+        { text: "curious", accent: true },
+        { text: " minds.", accent: false },
+      ],
     ],
   },
 

@@ -8,9 +8,9 @@ import { footerData } from "@/data/footer";
 export function Footer() {
   return (
     <footer className="bg-charcoal text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        {/* Thin accent line at top of footer content */}
-        <hr className="border-t border-[#FF5A36]/30 mb-12" />
+      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-[90px] py-16">
+        {/* Faint gray divider line above the tagline row */}
+        <hr className="border-t border-white/10 mb-12" />
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* ── Tagline + Socials ─────────────────────────── */}
