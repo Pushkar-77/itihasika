@@ -9,6 +9,9 @@ export function Footer() {
   return (
     <footer className="bg-charcoal text-white">
       <div className="mx-auto max-w-7xl px-6 py-16">
+        {/* Thin accent line at top of footer content */}
+        <hr className="border-t border-[#FF5A36]/30 mb-12" />
+
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* ── Tagline + Socials ─────────────────────────── */}
           <div>
@@ -34,7 +37,7 @@ export function Footer() {
           {/* ── Link columns ──────────────────────────────── */}
           {footerData.columns.map((col) => (
             <div key={col.title}>
-              <h3 className="mb-4 font-heading text-lg font-semibold text-red">
+              <h3 className="mb-4 font-body text-lg font-semibold text-[#FF5A36]">
                 {col.title}
               </h3>
               <ul className="space-y-3">

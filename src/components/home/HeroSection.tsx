@@ -59,9 +59,9 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
       {/* ── Content ───────────────────────────────────────── */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-10 pt-36 sm:pb-14">
+      <div className="relative z-10 w-full px-6 pb-10 pt-36 sm:pb-14">
         {/* Headline — Poppins bold, accent words in yellow */}
-        <h1 className="mb-8 max-w-3xl font-body text-4xl font-bold leading-[1.15] text-white sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="mb-8 max-w-[1100px] font-body text-[32px] font-bold leading-[1.1] text-white sm:text-[40px] md:text-[52px] lg:text-[64px] xl:text-[76px]">
           {heroData.headline.parts.map((part, i) =>
             part.accent ? (
               <span key={i} className="text-yellow">
@@ -91,12 +91,12 @@ export function HeroSection() {
         </div>
 
         {/* Stats bar */}
-        <div className="inline-flex flex-wrap items-stretch gap-0 rounded-2xl bg-charcoal/70 backdrop-blur-sm">
+        <div className="inline-flex items-stretch rounded-full bg-black/40 border border-white/10 backdrop-blur-md">
           {heroData.stats.map((stat, i) => (
             <div
               key={stat.label}
               className={`flex flex-col items-center justify-center px-8 py-5 ${
-                i > 0 ? "border-l border-white/15" : ""
+                i > 0 ? "border-l border-white/20" : ""
               }`}
             >
               <span className="text-2xl font-bold text-yellow sm:text-3xl md:text-4xl">
