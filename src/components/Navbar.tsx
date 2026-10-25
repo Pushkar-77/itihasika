@@ -68,15 +68,169 @@ export function Navbar() {
     router.refresh();
   };
 
+  const [pathname, setPathname] = useState("");
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
+
+  // Social URLs from data
+  const youtubeUrl =
+    socialLinks.find((s) => s.icon === "youtube")?.href || "#";
+  const instagramUrl =
+    socialLinks.find((s) => s.icon === "instagram")?.href || "#";
+  const twitterUrl =
+    socialLinks.find((s) => s.icon === "twitter")?.href || "#";
+
+  const desktopPageLinks = [
+    { label: "BOOKS", href: navLinks.find((l) => l.label.toLowerCase() === "books")?.href || "#" },
+    { label: "FILMS", href: navLinks.find((l) => l.label.toLowerCase() === "films")?.href || "/films" },
+    { label: "COURSES", href: navLinks.find((l) => l.label.toLowerCase() === "courses")?.href || "#" },
+    { label: "TIME TRAVEL", href: navLinks.find((l) => l.label.toLowerCase() === "time travel")?.href || "#" },
+    { label: "ABOUT", href: navLinks.find((l) => l.label.toLowerCase() === "about")?.href || "#" },
+    { label: "PRICING", href: navLinks.find((l) => l.label.toLowerCase() === "pricing")?.href || "#" },
+  ];
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 lg:pl-[90px] lg:pr-[110px] pt-4 transition-all duration-300">
-      <div className="flex items-center gap-6">
-        {/* ── Logo ───────────────────────────────────────────
-            TODO: Client must supply a dedicated light / white
-            version of logo.png for use on dark backgrounds.
-            Currently using a CSS filter (brightness-0 invert)
-            to approximate a white logo.
-            ──────────────────────────────────────────────────── */}
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      {/* ── Desktop Navbar (≥ 1024px) ──────────────────────────
+          Matches design/home-01.png. Sizes are in vw (1920px basis).
+          Pill starts at ~22% (21.8vw), ends ~6% before right edge (right: 5.8vw).
+          ──────────────────────────────────────────────────── */}
+      <div className="hidden lg:block relative w-full h-[4.4vw] mt-[1.7vw] pointer-events-none">
+        {/* ── Logo at far left (left: 2vw, ~9.6vw wide, vertically centered on pill's center line) ──
+            // TODO: replace with client logo that includes the TV badge */}
+        <div className="absolute left-[2vw] top-0 bottom-0 flex items-center pointer-events-auto">
+          <Link href="/" className="block w-[9.6vw] shrink-0">
+            <Image
+              src="/images/logo.png"
+              alt="Itihasika"
+              width={184}
+              height={108}
+              className="w-[9.6vw] h-auto object-contain"
+              priority
+            />
+          </Link>
+        </div>
+
+        {/* ── Pill Container (left: 21.8vw, right: 5.8vw, height: 4.4vw) ── */}
+        <nav
+          className={`absolute left-[21.8vw] right-[5.8vw] top-0 h-[4.4vw] rounded-full border border-[rgba(255,255,255,0.22)] shadow-[0_4px_24px_rgba(0,0,0,0.35)] flex items-center px-[2.2vw] pointer-events-auto transition-all duration-300 ${
+            scrolled
+              ? "bg-[rgba(27,27,27,0.98)] shadow-black/50"
+              : "bg-[rgba(27,27,27,0.94)] backdrop-blur-md"
+          }`}
+          aria-label="Main navigation"
+        >
+          {/* Links: BOOKS, FILMS, COURSES, TIME TRAVEL, ABOUT, PRICING, GIFT MEMBERSHIP */}
+          <div className="flex items-center gap-[2.15vw] shrink-0">
+            {desktopPageLinks.map((link) => {
+              const isActive =
+                link.href !== "#" && Boolean(pathname?.startsWith(link.href));
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`font-body font-semibold uppercase text-[0.8vw] tracking-[0.12em] whitespace-nowrap transition-colors ${
+                    isActive
+                      ? "text-[#FFC800]"
+                      : "text-white hover:text-[#FFC800]"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            {/* GIFT MEMBERSHIP with small yellow gift icon right before it */}
+            <Link
+              href={giftMembershipLink.href}
+              className={`inline-flex items-center gap-[0.35vw] font-body font-semibold uppercase text-[0.8vw] tracking-[0.12em] whitespace-nowrap transition-colors ${
+                pathname === giftMembershipLink.href
+                  ? "text-[#FFC800]"
+                  : "text-white hover:text-[#FFC800]"
+              }`}
+            >
+              <GiftIcon className="w-[0.9vw] h-[0.9vw] text-[#FFC800] shrink-0" />
+              <span>GIFT MEMBERSHIP</span>
+            </Link>
+          </div>
+
+          {/* Social icons: margin-left 2.7vw, gap 1.2vw, 1.6vw filled circles */}
+          <div className="ml-[2.7vw] flex items-center gap-[1.2vw] shrink-0">
+            {/* YouTube (red #FF0000, white play triangle) */}
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="w-[1.6vw] h-[1.6vw] rounded-full bg-[#FF0000] flex items-center justify-center shrink-0 transition-opacity hover:opacity-85"
+            >
+              <svg
+                className="w-[0.65vw] h-[0.65vw] fill-white translate-x-[0.05vw]"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </a>
+
+            {/* Instagram (gradient circle from yellow through pink to purple, white camera outline) */}
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-[1.6vw] h-[1.6vw] rounded-full flex items-center justify-center shrink-0 transition-opacity hover:opacity-85"
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)",
+              }}
+            >
+              <svg
+                className="w-[0.85vw] h-[0.85vw] text-white"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+
+            {/* Twitter (#1DA1F2 circle with the white bird) */}
+            <a
+              href={twitterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="w-[1.6vw] h-[1.6vw] rounded-full bg-[#1DA1F2] flex items-center justify-center shrink-0 transition-opacity hover:opacity-85"
+            >
+              <svg
+                className="w-[0.85vw] h-[0.85vw] fill-white"
+                viewBox="0 0 24 24"
+              >
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.936 9.936 0 0024 4.59z" />
+              </svg>
+            </a>
+          </div>
+
+          {/* CONTACT US button: margin-left 3.4vw, background #FFC800, black text, 6.7vw × 1.8vw, rounded-full */}
+          <Link
+            href={contactLink.href}
+            className="ml-[3.4vw] w-[6.7vw] h-[1.8vw] rounded-full bg-[#FFC800] hover:bg-[#e6b400] text-black font-body font-semibold text-[0.8vw] uppercase tracking-[0.05em] flex items-center justify-center shrink-0 whitespace-nowrap transition-colors"
+          >
+            CONTACT US
+          </Link>
+        </nav>
+      </div>
+
+      {/* ── Mobile Header Bar (< 1024px, UNCHANGED) ───────────── */}
+      <div className="flex items-center justify-between px-6 sm:px-10 pt-4 lg:hidden">
+        {/* Mobile Logo */}
         <Link href="/" className="relative z-10 shrink-0">
           <Image
             src="/images/logo.png"
@@ -88,114 +242,10 @@ export function Navbar() {
           />
         </Link>
 
-        {/* ── Desktop nav pill ────────────────────────────────
-            Spans from logo to ~110px from right viewport edge.
-            Becomes fully opaque (#0A0A0F) when scrolled > 60px.
-            ──────────────────────────────────────────────────── */}
-        <nav
-          className={`hidden lg:flex flex-1 items-center rounded-full px-5 py-2.5 shadow-lg transition-all duration-300 ${
-            scrolled
-              ? "bg-[#0A0A0F] shadow-black/40"
-              : "bg-[#0A0A0F]/90 backdrop-blur-md"
-          }`}
-          aria-label="Main navigation"
-        >
-          {/* Left group — page links (with more spacing) */}
-          <div className="flex items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="whitespace-nowrap px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90 transition-colors hover:text-yellow"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Spacer pushes right group to the end of the pill */}
-          <div className="flex-1" />
-
-          {/* Right group — gift membership, socials, contact, auth */}
-          <div className="flex items-center gap-2">
-            {/* Gift Membership — white text, yellow gift icon */}
-            <Link
-              href={giftMembershipLink.href}
-              className="flex items-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:text-yellow"
-            >
-              <GiftIcon />
-              <span>Gift Membership</span>
-            </Link>
-
-            {/* Social icons */}
-            {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="flex h-7 w-7 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-                style={{ backgroundColor: socialBg(s.icon) }}
-              >
-                <SocialIcon name={s.icon} />
-              </a>
-            ))}
-
-            {/* Contact Us CTA */}
-            <Link
-              href={contactLink.href}
-              className="ml-1 whitespace-nowrap rounded-full bg-yellow px-5 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-navy transition-colors hover:bg-yellow/90"
-            >
-              {contactLink.label}
-            </Link>
-
-            {/* ── Auth Buttons / User Email ── */}
-            {!authLoading && (
-              <>
-                <span className="mx-1 h-4 w-px bg-white/20" aria-hidden="true" />
-                {user ? (
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="flex max-w-[170px] items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium text-white/90"
-                      title={user.email ?? "Logged in user"}
-                    >
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-                      <span className="truncate">{user.email}</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      className="whitespace-nowrap px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70 transition-colors hover:text-red cursor-pointer"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1.5">
-                    <Link
-                      href="/login"
-                      className="whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90 transition-colors hover:text-yellow"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      href="/signup"
-                      className="whitespace-nowrap rounded-full bg-cyan px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-all hover:bg-cyan/90 hover:shadow-cyan/20"
-                    >
-                      Sign up
-                    </Link>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </nav>
-
-        {/* ── Mobile hamburger ────────────────────────────── */}
+        {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="ml-auto rounded-full bg-[#0A0A0F]/70 p-2.5 text-white backdrop-blur-md lg:hidden"
+          className="rounded-full bg-[#0A0A0F]/70 p-2.5 text-white backdrop-blur-md"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
         >
@@ -322,10 +372,14 @@ export function Navbar() {
 /* ── Helpers ──────────────────────────────────────────────── */
 
 /** Yellow gift-box SVG icon. */
-function GiftIcon() {
+function GiftIcon({
+  className = "h-4 w-4 text-yellow",
+}: {
+  className?: string;
+}) {
   return (
     <svg
-      className="h-4 w-4 text-yellow"
+      className={className}
       fill="currentColor"
       viewBox="0 0 24 24"
     >

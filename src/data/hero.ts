@@ -1,5 +1,5 @@
 export const heroData = {
-  /** Headline rendered in Poppins bold; accent words in yellow #FFC800. */
+  /** Headline rendered in Outfit 600; accent words in yellow #FFC800. */
   headline: {
     lines: [
       [
@@ -24,14 +24,15 @@ export const heroData = {
   },
 
   ctas: [
-    { label: "Subscribe to our OTT", href: "#", variant: "yellow" as const },
-    { label: "Browse our books", href: "#", variant: "white" as const },
-    { label: "Enroll in our courses", href: "#", variant: "white" as const },
+    { label: "Subscribe to our OTT", href: "/films", variant: "yellow" as const },
+    { label: "Browse our books", href: "#books", variant: "white" as const },
+    { label: "Enroll in our courses", href: "#courses", variant: "white" as const },
   ],
 
   stats: [
-    { value: 11, suffix: " M+", label: "Views on YouTube" },
-    { value: 3000, suffix: "+", label: "Books Sold" },
-    { value: 10, suffix: "", label: "Global Awards" },
+    { value: 11, suffix: " M+", label: "VIEWS ON YOUTUBE" },
+    { value: 3000, suffix: "+", label: "BOOKS SOLD" },
+    { value: 10, suffix: "", label: "GLOBAL AWARDS" },
   ],
 } as const;
+

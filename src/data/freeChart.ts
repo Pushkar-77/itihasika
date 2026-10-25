@@ -1,16 +1,22 @@
 export const freeChartData = {
-  label: "Free Printable Chart",
+  label: "FREE PRINTABLE CHART",
 
   heading: {
-    before: "Get Bharat's history ",
+    line1: "Get Bharat's history",
     accent: "on one chart",
     after: ".",
   },
 
-  body: "Join our mailing list and we'll immediately send you a beautifully designed, high-resolution chronology chart of every major event in Indian history.",
+  body: {
+    line1: "Join our mailing list and we’ll immediately send you a beautifully designed,",
+    line2: "high-resolution chronology chart of every major event in Indian history.",
+  },
+
   disclaimer: "We respect your inbox. No spam, ever.",
   ctaLabel: "Send it to me",
-
-  /** Placeholder — no timeline chart image asset yet. */
-  chartImage: null as string | null,
+  successMessage: "Thank you! Your chart is ready.",
+  downloadLabel: "Download the chart",
+  chartImage: "/images/free-chart.jpg",
 } as const;
+
+

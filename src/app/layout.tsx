@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Playfair_Display, Poppins, Inter, Josefin_Sans } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/shared/SmoothScrollProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -18,6 +18,20 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const josefin = Josefin_Sans({
+  variable: "--font-josefin",
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Itihasika — India's Timeless History Reimagined",
   description:
@@ -28,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${poppins.variable} antialiased`}
+      className={`${playfair.variable} ${poppins.variable} ${inter.variable} ${josefin.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col font-body text-navy">
         <SmoothScrollProvider>

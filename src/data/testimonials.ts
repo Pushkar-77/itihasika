@@ -1,4 +1,20 @@
-export const testimonialsData = {
+export interface TestimonialItem {
+  name: string;
+  location: string;
+  quote: string;
+  image: string;
+}
+
+export interface TestimonialsData {
+  heading: {
+    before: string;
+    accent: string;
+    after: string;
+  };
+  items: TestimonialItem[];
+}
+
+export const testimonialsData: TestimonialsData = {
   heading: {
     before: "Voices from ",
     accent: "thankful",
@@ -27,5 +43,12 @@ export const testimonialsData = {
         "Two children who dodged every book we ever bought — now reading these on repeat and bursting with questions. History, turned into magic.",
       image: "/images/people/family-4.jpg",
     },
+    {
+      name: "Shalabh & Shubhra K.",
+      location: "Pune – India",
+      quote:
+        "At a time when classrooms are increasingly shaped by political agendas, the Itihasika books and videos offer a breath of fresh air — rooted in timeless, wholesome values that spark independent thinking in our children.",
+      image: "/images/people/family-6.jpg",
+    },
   ],
-} as const;
+};
