@@ -6,6 +6,8 @@ interface PricingToggleProps {
   monthlyPrice: string;
   annualPrice: string;
   className?: string;
+  isAnnual?: boolean;
+  onChange?: (isAnnual: boolean) => void;
 }
 
 /**
@@ -16,16 +18,26 @@ export function PricingToggle({
   monthlyPrice,
   annualPrice,
   className = "",
+  isAnnual: controlledIsAnnual,
+  onChange,
 }: PricingToggleProps) {
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [internalIsAnnual, setInternalIsAnnual] = useState(false);
+  const isAnnual = controlledIsAnnual !== undefined ? controlledIsAnnual : internalIsAnnual;
+
+  const handleSetAnnual = (value: boolean) => {
+    if (controlledIsAnnual === undefined) {
+      setInternalIsAnnual(value);
+    }
+    onChange?.(value);
+  };
 
   return (
     <div
       className={`inline-flex items-stretch rounded-full bg-white p-1 shadow-md ${className}`}
     >
       <button
-        onClick={() => setIsAnnual(false)}
-        className={`flex flex-col items-center justify-center rounded-full px-6 py-2 transition-colors duration-300 ${
+        onClick={() => handleSetAnnual(false)}
+        className={`flex flex-col items-center justify-center rounded-full px-6 py-2 transition-colors duration-300 cursor-pointer ${
           !isAnnual
             ? "bg-yellow text-navy"
             : "bg-transparent text-gray-400"
@@ -36,8 +48,8 @@ export function PricingToggle({
         <span className="text-lg font-bold leading-tight">{monthlyPrice}</span>
       </button>
       <button
-        onClick={() => setIsAnnual(true)}
-        className={`flex flex-col items-center justify-center rounded-full px-6 py-2 transition-colors duration-300 ${
+        onClick={() => handleSetAnnual(true)}
+        className={`flex flex-col items-center justify-center rounded-full px-6 py-2 transition-colors duration-300 cursor-pointer ${
           isAnnual
             ? "bg-yellow text-navy"
             : "bg-transparent text-gray-400"
