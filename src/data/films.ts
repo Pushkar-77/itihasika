@@ -6,7 +6,7 @@ export const filmsData = {
   },
   subtitle:
     "Timeless history the whole family can watch together — then argue about at dinner.",
-  viewAllHref: "#",
+  viewAllHref: "/films",
 
   items: [
     {
