@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { FilmsHeader } from "@/components/films/FilmsHeader";
 import { FilmCard, TitleRecord } from "@/components/films/FilmCard";
@@ -75,6 +76,9 @@ const ERAS: EraDefinition[] = [
 ];
 
 async function FilmsCatalogContent() {
+  // Render on every request (the page reads the logged-in user and the database)
+  await connection();
+
   const supabase = await createClient();
 
   const { data: rawTitles } = await supabase
@@ -142,7 +146,7 @@ async function FilmsCatalogContent() {
                 No titles available at the moment.
               </p>
               <p className="mt-2 text-sm text-navy/40">
-                Please check back soon as our catalog is updated weekly.
+                More titles coming soon.
               </p>
             </div>
           )}

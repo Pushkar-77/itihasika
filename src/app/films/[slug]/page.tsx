@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { WatchlistButton } from "@/components/films/WatchlistButton";
 import { formatDuration } from "@/components/films/FilmCard";
@@ -35,6 +36,9 @@ export async function generateMetadata({
 }
 
 async function FilmDetailContent({ params }: PageProps) {
+  // Render on every request (depends on the logged-in user and the database)
+  await connection();
+
   const { slug } = await params;
   const supabase = await createClient();
 
