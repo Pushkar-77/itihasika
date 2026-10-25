@@ -75,8 +75,8 @@ export function FilmCard({ title }: { title: TitleRecord }) {
             </span>
           )}
 
-          {/* Lock icon for premium (bottom left) */}
-          {title.is_premium && (
+          {/* Lock icon for premium or FREE tag for free (bottom left) */}
+          {title.is_premium ? (
             <span
               className="absolute bottom-2.5 left-2.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/85 text-yellow shadow-md backdrop-blur-sm"
               title="Premium subscriber content"
@@ -92,6 +92,10 @@ export function FilmCard({ title }: { title: TitleRecord }) {
                   clipRule="evenodd"
                 />
               </svg>
+            </span>
+          ) : (
+            <span className="absolute bottom-2.5 left-2.5 rounded bg-[#00AEEF] px-2 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
+              FREE
             </span>
           )}
 
