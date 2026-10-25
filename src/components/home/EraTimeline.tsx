@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { timelineData } from "@/data/timeline";
 import { pricingData } from "@/data/pricing";
@@ -11,7 +12,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
    - Cream #F3EAD3 background
    - Left: OTT subscription pitch + Monthly/Annual toggle + Cyan CTA
    - Center: Vertical timeline with six eras (Ancient India in red)
-   - Right: Clearly marked placeholder for the Indus statue
+   - Right: Indus Valley Priest-King statue (blended on cream)
    ───────────────────────────────────────────────────────────── */
 export function EraTimeline() {
   return (
@@ -114,51 +115,21 @@ export function EraTimeline() {
             </ScrollReveal>
           </div>
 
-          {/* ── Right Column: Clearly Marked Statue Placeholder ─── */}
-          <div className="lg:col-span-3 flex justify-center lg:justify-end">
-            <ScrollReveal delay={0.2}>
-              <div
-                className="relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-red/25 bg-[#EAE0C8]/60 p-6 sm:p-8 text-center shadow-inner max-w-[280px] w-full min-h-[460px]"
-                role="img"
-                aria-label="Placeholder for Indus Valley Priest-King statue"
-              >
-                {/* Prominent Badge */}
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-red/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-red">
-                  <span className="h-2 w-2 rounded-full bg-red animate-pulse" />
-                  Placeholder
-                </div>
-
-                {/* Priest-King illustrative icon */}
-                <div className="my-8 text-[#A8987E]">
-                  <svg
-                    className="h-28 w-28 mx-auto"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M9 7h6M10 5h4M12 14v3M9 18l3-1 3 1"
-                    />
-                  </svg>
-                </div>
-
-                {/* Description */}
-                <h5 className="font-heading text-lg font-bold text-navy">
-                  {timelineData.statuePlaceholder.title}
-                </h5>
-                <p className="mt-2 text-xs leading-relaxed text-navy/60">
-                  {timelineData.statuePlaceholder.subtitle}
-                </p>
-              </div>
+          {/* ── Right Column: Indus Valley Priest-King Statue (home-04.png) ─── */}
+          <div className="lg:col-span-3 flex justify-center lg:justify-end lg:self-end">
+            <ScrollReveal delay={0.2} className="flex justify-center lg:justify-end items-end">
+              <Image
+                src="/images/timeline/indus-statue.png"
+                alt="Indus Valley Priest-King statue"
+                width={402}
+                height={662}
+                priority
+                className="w-[240px] sm:w-[280px] md:w-[320px] lg:w-[18vw] lg:max-w-[350px] h-auto object-contain select-none pointer-events-none drop-shadow-[0_20px_28px_rgba(0,0,0,0.22)] mix-blend-multiply"
+                style={{
+                  filter: "drop-shadow(0 20px 28px rgba(0, 0, 0, 0.22))",
+                  mixBlendMode: "multiply",
+                }}
+              />
             </ScrollReveal>
           </div>
         </div>

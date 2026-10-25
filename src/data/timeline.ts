@@ -60,11 +60,10 @@ export const timelineData = {
   ],
 
   /**
-   * Placeholder — no Indus-valley statue asset yet.
-   * Do NOT use stone-lifting.png or temple-sage.png here.
+   * Indus Valley Priest-King statue (Ancient India, c. 2000 BCE)
    */
-  statuePlaceholder: {
-    title: "Indus Valley Priest-King Statue",
-    subtitle: "Ancient India (c. 2000 BCE) — Asset pending client delivery",
+  statue: {
+    src: "/images/timeline/indus-statue.png",
+    alt: "Indus Valley Priest-King statue",
   },
 } as const;

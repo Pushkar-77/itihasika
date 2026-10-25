@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { testimonialsData } from "@/data/testimonials";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
@@ -13,6 +13,21 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
    ───────────────────────────────────────────────────────────── */
 export function TestimonialsCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScroll, setCanScroll] = useState(false);
+
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (scrollRef.current) {
+        setCanScroll(
+          scrollRef.current.scrollWidth > scrollRef.current.clientWidth
+        );
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener("resize", checkScrollable);
+    return () => window.removeEventListener("resize", checkScrollable);
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -60,10 +75,11 @@ export function TestimonialsCarousel() {
             </svg>
           </button>
 
-          {/* Cards Track */}
+          {/* Cards Track: only scrolls horizontally on mobile/tablet where content overflows */}
           <div
             ref={scrollRef}
-            className="scrollbar-hide flex-1 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory"
+            data-lenis-prevent={canScroll ? "true" : undefined}
+            className="scrollbar-hide flex-1 max-lg:overflow-x-auto lg:overflow-visible pb-6 pt-2 max-lg:snap-x max-lg:snap-mandatory"
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-7">
               {testimonialsData.items.map((item, index) => (

@@ -6,7 +6,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 /* ─────────────────────────────────────────────────────────────
    Films Row — "Movies that build connection." (home-05.png)
    White background · 4 cards in a row · "View All" link
-   Bajirao Ballal gets a clearly marked placeholder card.
+   16:9 aspect ratio · rounded-2xl · scale-[1.03] · hover lift
    ───────────────────────────────────────────────────────────── */
 export function FilmsRow() {
   return (
@@ -38,49 +38,19 @@ export function FilmsRow() {
         <ScrollReveal delay={0.1}>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {filmsData.items.map((film) => (
-              <article key={film.title} className="group">
-                {/* Thumbnail / Placeholder */}
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-light-gray">
-                  {film.image ? (
-                    <Image
-                      src={film.image}
-                      alt={film.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                  ) : (
-                    /* ── Clearly marked placeholder ──────── */
-                    <div className="flex h-full flex-col items-center justify-center gap-3 p-4 text-center">
-                      <div className="inline-flex items-center gap-1.5 rounded-full bg-red/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-red">
-                        <span className="h-2 w-2 rounded-full bg-red animate-pulse" />
-                        Placeholder
-                      </div>
-                      <svg
-                        className="h-16 w-16 text-navy/20"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.2}
-                          d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25z"
-                        />
-                      </svg>
-                      <p className="text-xs text-navy/40 font-medium">
-                        {film.title} — thumbnail coming soon
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Views badge */}
-                  {"badge" in film && film.badge && (
-                    <span className="absolute bottom-3 left-3 rounded-md bg-cyan px-3 py-1 text-xs font-bold text-white shadow-lg">
-                      {film.badge}
-                    </span>
-                  )}
+              <article
+                key={film.title}
+                className="group transition-transform duration-300 hover:-translate-y-1"
+              >
+                {/* Thumbnail (16:9, rounded-2xl, clipped box) */}
+                <div className="relative aspect-video overflow-hidden rounded-2xl bg-light-gray shadow-sm transition-all duration-300 group-hover:shadow-md">
+                  <Image
+                    src={film.image}
+                    alt={film.title}
+                    fill
+                    className="object-cover transition-transform duration-500 scale-[1.03] group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
                 </div>
 
                 {/* Title + subtitle */}

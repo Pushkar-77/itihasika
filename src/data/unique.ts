@@ -1,8 +1,8 @@
 export const uniqueData = {
-  leftLabel: "What makes us unique",
-  rightLabel: "Why Itihasika",
+  leftLabel: "WHAT MAKES US UNIQUE",
+  rightLabel: "WHY ITIHASIKA",
 
-  /** Body copy — accent phrases render in red bold italic. */
+  /** Body copy — accent phrases render in red. */
   body: [
     { text: "Most children meet Indian history as a list of dates. We hand them ", accent: false },
     { text: "the story", accent: true },
@@ -16,9 +16,7 @@ export const uniqueData = {
   /** Physical book shown on the left side of the image cluster. */
   bookImage: "/images/books/history-india.png",
 
-  /**
-   * Image displayed inside a CSS tablet frame (dark rounded bezel).
-   * Using rajendra-chola.jpg as a placeholder screen.
-   */
-  tabletScreenImage: "/images/films/rajendra-chola.jpg",
+  /** Video and poster displayed inside the iPad tablet frame. */
+  tabletVideo: "/videos/shiva-web.mp4",
+  tabletPoster: "/images/shiva-poster.jpg",
 } as const;

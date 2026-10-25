@@ -28,9 +28,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${poppins.variable} h-full antialiased`}
+      className={`${playfair.variable} ${poppins.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body text-navy">
+      <body className="min-h-screen flex flex-col font-body text-navy">
         <SmoothScrollProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
