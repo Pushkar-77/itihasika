@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 import {
   navLinks,
   giftMembershipLink,
@@ -18,6 +21,9 @@ import {
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -31,6 +37,36 @@ export function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    // Fetch initial session
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user ?? null);
+      setAuthLoading(false);
+    });
+
+    // Listen to auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setAuthLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-10 lg:pl-[90px] lg:pr-[110px] pt-4 transition-all duration-300">
@@ -80,7 +116,7 @@ export function Navbar() {
           {/* Spacer pushes right group to the end of the pill */}
           <div className="flex-1" />
 
-          {/* Right group — gift membership, socials, contact */}
+          {/* Right group — gift membership, socials, contact, auth */}
           <div className="flex items-center gap-2">
             {/* Gift Membership — white text, yellow gift icon */}
             <Link
@@ -113,6 +149,46 @@ export function Navbar() {
             >
               {contactLink.label}
             </Link>
+
+            {/* ── Auth Buttons / User Email ── */}
+            {!authLoading && (
+              <>
+                <span className="mx-1 h-4 w-px bg-white/20" aria-hidden="true" />
+                {user ? (
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="flex max-w-[170px] items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium text-white/90"
+                      title={user.email ?? "Logged in user"}
+                    >
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                      <span className="truncate">{user.email}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="whitespace-nowrap px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70 transition-colors hover:text-red cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href="/login"
+                      className="whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90 transition-colors hover:text-yellow"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="whitespace-nowrap rounded-full bg-cyan px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm transition-all hover:bg-cyan/90 hover:shadow-cyan/20"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </nav>
 
@@ -195,6 +271,47 @@ export function Navbar() {
             >
               {contactLink.label}
             </Link>
+
+            {/* Mobile Auth */}
+            {!authLoading && (
+              <div className="mt-2 border-t border-white/10 pt-4">
+                {user ? (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 rounded-xl bg-white/5 p-3 text-xs text-white/90">
+                      <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
+                      <span className="truncate font-medium">{user.email}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        handleLogout();
+                      }}
+                      className="text-left text-sm font-semibold uppercase tracking-wider text-red transition-colors hover:text-red/80 cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileOpen(false)}
+                      className="text-sm font-semibold uppercase tracking-wider text-white/90 transition-colors hover:text-yellow py-1"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/signup"
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-full bg-cyan px-5 py-2.5 text-center text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-cyan/90"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
           </nav>
         </div>
       )}
